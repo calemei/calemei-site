@@ -351,13 +351,13 @@
 
     .album-art {
       display: block;
-      width: 72px;
-      height: 72px;
+      width: clamp(280px, 50vw, 520px);
+      height: clamp(280px, 50vw, 520px);
       object-fit: cover;
       object-position: center 30%;
       border: 1px solid rgba(180,180,180,0.1);
-      margin-bottom: 1.4rem;
-      filter: grayscale(20%) brightness(0.9);
+      margin: 0 auto 2.5rem;
+      filter: grayscale(15%) brightness(0.88);
     }
 
     .track-row {
@@ -678,7 +678,7 @@
     <img src="assets/album-art.jpg" alt="" class="album-art" />
 
     <div class="track-row reveal" id="trackRow">
-      <button class="play-btn" id="playBtn" aria-label="Play">
+      <button class="play-btn" id="playBtn" type="button" aria-label="Play">
         <span class="play-icon" id="playIcon"></span>
         <span class="pause-icon" id="pauseIcon">
           <span class="pause-bar"></span>
@@ -792,38 +792,41 @@
     const pauseIcon = document.getElementById('pauseIcon');
     const progressBar = document.getElementById('progressBar');
     const progressWrap = document.getElementById('progressWrap');
-    const trackDuration = document.getElementById('trackDuration');
 
-    playBtn.addEventListener('click', () => {
+    playBtn.addEventListener('click', function() {
       if (audio.paused) {
-        audio.play().then(() => {
-          playIcon.style.display = 'none';
-          pauseIcon.style.display = 'flex';
-          progressWrap.style.display = 'block';
-        }).catch(() => {});
+        audio.play().catch(function(e) { console.error('Audio error:', e); });
       } else {
         audio.pause();
-        playIcon.style.display = 'block';
-        pauseIcon.style.display = 'none';
       }
     });
 
-    audio.addEventListener('timeupdate', () => {
-      const pct = (audio.currentTime / audio.duration) * 100;
-      progressBar.style.width = pct + '%';
+    audio.addEventListener('play', function() {
+      playIcon.style.display = 'none';
+      pauseIcon.style.display = 'flex';
     });
 
-    audio.addEventListener('ended', () => {
+    audio.addEventListener('pause', function() {
       playIcon.style.display = 'block';
       pauseIcon.style.display = 'none';
+    });
+
+    audio.addEventListener('ended', function() {
       progressBar.style.width = '0%';
       audio.currentTime = 0;
     });
 
-    progressWrap.addEventListener('click', (e) => {
+    audio.addEventListener('timeupdate', function() {
+      if (audio.duration) {
+        progressBar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      }
+    });
+
+    progressWrap.addEventListener('click', function(e) {
       const rect = progressWrap.getBoundingClientRect();
-      const pct = (e.clientX - rect.left) / rect.width;
-      audio.currentTime = pct * audio.duration;
+      if (audio.duration) {
+        audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+      }
     });
   </script>
 
