@@ -390,6 +390,36 @@
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /* MOBILE TABS */
+    .mobile-tabs { display: none; }
+    @media (max-width: 768px) {
+      .mobile-tabs {
+        display: flex;
+        gap: 0;
+        position: relative;
+        z-index: 1;
+      }
+      .mobile-tab {
+        font-size: 0.55rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.45rem 0.9rem;
+        border: 1px solid rgba(180,180,180,0.15);
+        color: var(--chrome-dim);
+        transition: all 0.3s;
+        white-space: nowrap;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .mobile-tab + .mobile-tab { border-left: none; }
+      .mobile-tab.active {
+        color: var(--chrome-light);
+        border-color: rgba(180,180,180,0.4);
+        background: rgba(180,180,180,0.06);
+      }
+    }
+
     /* MOBILE */
     @media (max-width: 900px) {
       .products { padding: 4rem 1.5rem; }
@@ -414,6 +444,10 @@
 
   <nav>
     <a href="index.html" class="nav-logo">Calemei</a>
+    <div class="mobile-tabs">
+      <a href="index.html" class="mobile-tab">Calemei</a>
+      <a href="merch.html" class="mobile-tab active">Shop</a>
+    </div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="merch.html" class="active">Shop</a></li>

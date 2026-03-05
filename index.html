@@ -577,6 +577,38 @@
       footer { padding: 1.5rem; flex-direction: column; gap: 0.8rem; text-align: center; }
     }
 
+    /* MOBILE TABS */
+    .mobile-tabs {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .mobile-tabs {
+        display: flex;
+        gap: 0;
+        position: relative;
+        z-index: 1;
+      }
+      .mobile-tab {
+        font-size: 0.55rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.45rem 0.9rem;
+        border: 1px solid rgba(180,180,180,0.15);
+        color: var(--chrome-dim);
+        transition: all 0.3s;
+        white-space: nowrap;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .mobile-tab + .mobile-tab { border-left: none; }
+      .mobile-tab.active {
+        color: var(--chrome-light);
+        border-color: rgba(180,180,180,0.4);
+        background: rgba(180,180,180,0.06);
+      }
+    }
+
     @media (max-width: 400px) {
       .hero-name { font-size: 3rem; }
       .hero-eyebrow { font-size: 0.55rem; }
@@ -591,6 +623,10 @@
 
   <nav>
     <a href="/" class="nav-logo">Calemei</a>
+    <div class="mobile-tabs">
+      <a href="/" class="mobile-tab active">Calemei</a>
+      <a href="merch.html" class="mobile-tab">Shop</a>
+    </div>
     <ul class="nav-links">
       <li><a href="#music">Music</a></li>
       <li><a href="#journey">Journey</a></li>
