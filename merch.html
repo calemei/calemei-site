@@ -176,20 +176,16 @@
 
     .mockup-inner {
       position: relative;
-      width: 88%;
-      aspect-ratio: 620/660;
+      width: 100%;
+      height: 100%;
     }
-    .hoodie-svg { width: 100%; height: 100%; }
-
-    .logo-overlay {
-      position: absolute;
-      top: 38%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 28%;
-      pointer-events: none;
+    .mockup-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
-    .logo-overlay img { width: 100%; height: auto; display: block; }
 
     .mockup-tag {
       position: absolute;
@@ -458,7 +454,7 @@
 
   <!-- HERO -->
   <section class="drop-hero">
-    <p class="drop-label">Calemei World &nbsp;·&nbsp; Drop 001</p>
+    <p class="drop-label">See You Never &nbsp;·&nbsp; Drop 001</p>
     <img src="assets/killtrip-logo-transparent.png" alt="Killtrip" class="drop-logo" />
     <p class="drop-sub"><em>Limited run.</em> &nbsp;Pre-order open now.</p>
     <div class="drop-divider"></div>
@@ -472,130 +468,7 @@
       <div class="product-card reveal">
         <div class="mockup-wrap mockup-bg-black">
           <div class="mockup-inner">
-            <svg class="hoodie-svg" viewBox="0 0 620 660" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="bBody" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%"   stop-color="#141414"/>
-                  <stop offset="25%"  stop-color="#1f1f1f"/>
-                  <stop offset="50%"  stop-color="#262626"/>
-                  <stop offset="75%"  stop-color="#1f1f1f"/>
-                  <stop offset="100%" stop-color="#141414"/>
-                </linearGradient>
-                <linearGradient id="bHood" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%"   stop-color="#1e1e1e"/>
-                  <stop offset="100%" stop-color="#161616"/>
-                </linearGradient>
-                <linearGradient id="bSlvL" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%"   stop-color="#0f0f0f"/>
-                  <stop offset="100%" stop-color="#1c1c1c"/>
-                </linearGradient>
-                <linearGradient id="bSlvR" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%"   stop-color="#1c1c1c"/>
-                  <stop offset="100%" stop-color="#0f0f0f"/>
-                </linearGradient>
-                <filter id="bShadow">
-                  <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.5"/>
-                </filter>
-              </defs>
-
-              <!-- Full hoodie silhouette -->
-              <path d="
-                M 192 152
-                C 178 90, 222 24, 310 22
-                C 398 24, 442 90, 428 152
-                L 510 166
-                C 544 204, 584 300, 590 392
-                L 526 402
-                C 510 310, 488 248, 466 234
-                L 466 636
-                L 154 636
-                L 154 234
-                C 132 248, 110 310, 94 402
-                L 30 392
-                C 36 300, 76 204, 110 166
-                Z
-              " fill="url(#bBody)" stroke="#111" stroke-width="1" filter="url(#bShadow)"/>
-
-              <!-- Hood overlay (slightly different shade) -->
-              <path d="
-                M 192 152
-                C 178 90, 222 24, 310 22
-                C 398 24, 442 90, 428 152
-                C 408 144, 365 136, 310 134
-                C 255 136, 212 144, 192 152 Z
-              " fill="url(#bHood)" stroke="#111" stroke-width="0.8"/>
-
-              <!-- Hood inner rim / opening -->
-              <path d="
-                M 224 152
-                C 252 168, 284 174, 310 174
-                C 336 174, 368 168, 396 152
-                C 372 162, 344 168, 310 168
-                C 276 168, 248 162, 224 152 Z
-              " fill="#0d0d0d"/>
-
-              <!-- Hood lining shadow -->
-              <ellipse cx="310" cy="158" rx="86" ry="18" fill="#0a0a0a" opacity="0.6"/>
-
-              <!-- Left sleeve shading -->
-              <path d="
-                M 192 152 L 110 166
-                C 84 202, 44 298, 30 392
-                L 94 402
-                C 110 310, 132 248, 154 234
-                L 154 200 C 148 190 140 176 192 152 Z
-              " fill="url(#bSlvL)" opacity="0.6"/>
-
-              <!-- Right sleeve shading -->
-              <path d="
-                M 428 152 L 510 166
-                C 536 202, 576 298, 590 392
-                L 526 402
-                C 510 310, 488 248, 466 234
-                L 466 200 C 472 190 480 176 428 152 Z
-              " fill="url(#bSlvR)" opacity="0.6"/>
-
-              <!-- Drawstring left -->
-              <path d="M 278 168 C 274 230, 264 330, 260 440" stroke="#1a1a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-              <ellipse cx="259" cy="447" rx="5" ry="7" fill="#151515"/>
-
-              <!-- Drawstring right -->
-              <path d="M 342 168 C 346 230, 356 330, 360 440" stroke="#1a1a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-              <ellipse cx="361" cy="447" rx="5" ry="7" fill="#151515"/>
-
-              <!-- Kangaroo pocket -->
-              <path d="M 164 435 L 456 435 L 456 520 L 164 520 Z" fill="#131313" stroke="#1a1a1a" stroke-width="1"/>
-              <!-- Pocket top seam / shadow -->
-              <path d="M 164 435 L 456 435 L 456 448 L 164 448 Z" fill="#0f0f0f" opacity="0.5"/>
-              <!-- Pocket center divide -->
-              <line x1="310" y1="435" x2="310" y2="520" stroke="#0f0f0f" stroke-width="1.5"/>
-              <!-- Pocket stitching -->
-              <line x1="166" y1="438" x2="454" y2="438" stroke="#191919" stroke-width="0.8" stroke-dasharray="5,4" opacity="0.6"/>
-              <line x1="166" y1="517" x2="454" y2="517" stroke="#191919" stroke-width="0.8" stroke-dasharray="5,4" opacity="0.4"/>
-
-              <!-- Hem ribbing -->
-              <rect x="154" y="622" width="312" height="14" fill="#111" stroke="#1a1a1a" stroke-width="0.5"/>
-              <line x1="154" y1="626" x2="466" y2="626" stroke="#1c1c1c" stroke-width="0.6" opacity="0.5"/>
-              <line x1="154" y1="630" x2="466" y2="630" stroke="#1c1c1c" stroke-width="0.6" opacity="0.4"/>
-
-              <!-- Left cuff ribbing band -->
-              <path d="M 30 392 L 94 402 L 90 416 L 26 406 Z" fill="#111" stroke="#1a1a1a" stroke-width="0.5"/>
-              <line x1="28" y1="398" x2="92" y2="408" stroke="#1c1c1c" stroke-width="0.6" opacity="0.5"/>
-
-              <!-- Right cuff ribbing band -->
-              <path d="M 590 392 L 526 402 L 530 416 L 594 406 Z" fill="#111" stroke="#1a1a1a" stroke-width="0.5"/>
-              <line x1="592" y1="398" x2="528" y2="408" stroke="#1c1c1c" stroke-width="0.6" opacity="0.5"/>
-
-              <!-- Armhole seam lines -->
-              <line x1="192" y1="152" x2="154" y2="234" stroke="#111" stroke-width="2" opacity="0.6"/>
-              <line x1="428" y1="152" x2="466" y2="234" stroke="#111" stroke-width="2" opacity="0.6"/>
-
-              <!-- Center seam -->
-              <line x1="310" y1="174" x2="310" y2="435" stroke="#111" stroke-width="1.2" opacity="0.3"/>
-            </svg>
-            <div class="logo-overlay">
-              <img src="assets/killtrip-logo-transparent.png" alt="Killtrip" />
-            </div>
+            <img src="assets/hoodie-black.png" alt="Killtrip Black Hoodie" class="mockup-photo" />
           </div>
           <span class="mockup-tag">Black — Drop 001</span>
         </div>
@@ -643,108 +516,7 @@
       <div class="product-card reveal">
         <div class="mockup-wrap mockup-bg-white">
           <div class="mockup-inner">
-            <svg class="hoodie-svg" viewBox="0 0 620 660" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="wBody" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%"   stop-color="#d4d4d4"/>
-                  <stop offset="25%"  stop-color="#e8e8e8"/>
-                  <stop offset="50%"  stop-color="#f2f2f2"/>
-                  <stop offset="75%"  stop-color="#e8e8e8"/>
-                  <stop offset="100%" stop-color="#d4d4d4"/>
-                </linearGradient>
-                <linearGradient id="wHood" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%"   stop-color="#e8e8e8"/>
-                  <stop offset="100%" stop-color="#dcdcdc"/>
-                </linearGradient>
-                <linearGradient id="wSlvL" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%"   stop-color="#c4c4c4"/>
-                  <stop offset="100%" stop-color="#d8d8d8"/>
-                </linearGradient>
-                <linearGradient id="wSlvR" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%"   stop-color="#d8d8d8"/>
-                  <stop offset="100%" stop-color="#c4c4c4"/>
-                </linearGradient>
-                <filter id="wShadow">
-                  <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#999" flood-opacity="0.25"/>
-                </filter>
-              </defs>
-
-              <path d="
-                M 192 152
-                C 178 90, 222 24, 310 22
-                C 398 24, 442 90, 428 152
-                L 510 166
-                C 544 204, 584 300, 590 392
-                L 526 402
-                C 510 310, 488 248, 466 234
-                L 466 636
-                L 154 636
-                L 154 234
-                C 132 248, 110 310, 94 402
-                L 30 392
-                C 36 300, 76 204, 110 166
-                Z
-              " fill="url(#wBody)" stroke="#ccc" stroke-width="1" filter="url(#wShadow)"/>
-
-              <path d="
-                M 192 152
-                C 178 90, 222 24, 310 22
-                C 398 24, 442 90, 428 152
-                C 408 144, 365 136, 310 134
-                C 255 136, 212 144, 192 152 Z
-              " fill="url(#wHood)" stroke="#ccc" stroke-width="0.8"/>
-
-              <path d="
-                M 224 152
-                C 252 168, 284 174, 310 174
-                C 336 174, 368 168, 396 152
-                C 372 162, 344 168, 310 168
-                C 276 168, 248 162, 224 152 Z
-              " fill="#c8c8c8"/>
-
-              <ellipse cx="310" cy="158" rx="86" ry="18" fill="#bbb" opacity="0.4"/>
-
-              <path d="
-                M 192 152 L 110 166
-                C 84 202, 44 298, 30 392
-                L 94 402
-                C 110 310, 132 248, 154 234
-                L 154 200 C 148 190 140 176 192 152 Z
-              " fill="url(#wSlvL)" opacity="0.5"/>
-
-              <path d="
-                M 428 152 L 510 166
-                C 536 202, 576 298, 590 392
-                L 526 402
-                C 510 310, 488 248, 466 234
-                L 466 200 C 472 190 480 176 428 152 Z
-              " fill="url(#wSlvR)" opacity="0.5"/>
-
-              <path d="M 278 168 C 274 230, 264 330, 260 440" stroke="#c0c0c0" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-              <ellipse cx="259" cy="447" rx="5" ry="7" fill="#bbb"/>
-              <path d="M 342 168 C 346 230, 356 330, 360 440" stroke="#c0c0c0" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-              <ellipse cx="361" cy="447" rx="5" ry="7" fill="#bbb"/>
-
-              <path d="M 164 435 L 456 435 L 456 520 L 164 520 Z" fill="#ddd" stroke="#ccc" stroke-width="1"/>
-              <path d="M 164 435 L 456 435 L 456 448 L 164 448 Z" fill="#ccc" opacity="0.4"/>
-              <line x1="310" y1="435" x2="310" y2="520" stroke="#c8c8c8" stroke-width="1.5"/>
-              <line x1="166" y1="438" x2="454" y2="438" stroke="#ccc" stroke-width="0.8" stroke-dasharray="5,4" opacity="0.6"/>
-              <line x1="166" y1="517" x2="454" y2="517" stroke="#ccc" stroke-width="0.8" stroke-dasharray="5,4" opacity="0.4"/>
-
-              <rect x="154" y="622" width="312" height="14" fill="#d0d0d0" stroke="#ccc" stroke-width="0.5"/>
-              <line x1="154" y1="626" x2="466" y2="626" stroke="#c8c8c8" stroke-width="0.6" opacity="0.5"/>
-              <line x1="154" y1="630" x2="466" y2="630" stroke="#c8c8c8" stroke-width="0.6" opacity="0.4"/>
-
-              <path d="M 30 392 L 94 402 L 90 416 L 26 406 Z" fill="#ccc" stroke="#bbb" stroke-width="0.5"/>
-              <path d="M 590 392 L 526 402 L 530 416 L 594 406 Z" fill="#ccc" stroke="#bbb" stroke-width="0.5"/>
-
-              <line x1="192" y1="152" x2="154" y2="234" stroke="#ccc" stroke-width="2" opacity="0.5"/>
-              <line x1="428" y1="152" x2="466" y2="234" stroke="#ccc" stroke-width="2" opacity="0.5"/>
-              <line x1="310" y1="174" x2="310" y2="435" stroke="#ccc" stroke-width="1.2" opacity="0.3"/>
-            </svg>
-            <div class="logo-overlay">
-              <img src="assets/killtrip-logo-transparent.png" alt="Killtrip" />
-            </div>
+            <img src="assets/hoodie-white.png" alt="Killtrip White Hoodie" class="mockup-photo" />
           </div>
           <span class="mockup-tag" style="color:#888;">White — Drop 001</span>
         </div>
