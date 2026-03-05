@@ -172,6 +172,16 @@
       background-clip: text;
       opacity: 0;
       animation: riseIn 1.4s ease 0.6s forwards;
+      position: relative;
+    }
+
+    .drip-svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 3;
     }
 
     .hero-tagline {
@@ -584,8 +594,24 @@
     <div class="hero-bg"></div>
     <div class="hero-content">
       <p class="hero-eyebrow">Artist &nbsp;·&nbsp; Builder &nbsp;·&nbsp; Visionary</p>
-      <h1 class="hero-name">Calemei</h1>
-      <p class="hero-tagline"><em>After all,</em> &nbsp;I am only human.</p>
+      <h1 class="hero-name" id="heroName">
+        <span class="letter">C</span><span class="letter">a</span><span class="letter">l</span><span class="letter">e</span><span class="letter">m</span><span class="letter">e</span><span class="letter">i</span>
+        <svg class="drip-svg" id="dripSvg" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="dripG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#d8d8d8" stop-opacity="0.95"/>
+              <stop offset="35%"  stop-color="#aaaaaa" stop-opacity="0.85"/>
+              <stop offset="100%" stop-color="#555555" stop-opacity="0.4"/>
+            </linearGradient>
+            <linearGradient id="dripG2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#e8e8e8" stop-opacity="0.9"/>
+              <stop offset="50%"  stop-color="#999999" stop-opacity="0.75"/>
+              <stop offset="100%" stop-color="#444444" stop-opacity="0.35"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </h1>
+      <p class="hero-tagline">what the freaking heck</p>
     </div>
     <div class="scroll-indicator">
       <span>Scroll</span>
@@ -692,6 +718,54 @@
   </footer>
 
   <script>
+    // Chrome drip effect
+    async function initDrips() {
+      await document.fonts.ready;
+      const heroName = document.getElementById('heroName');
+      const svg = document.getElementById('dripSvg');
+      const letters = heroName.querySelectorAll('.letter');
+      const nameRect = heroName.getBoundingClientRect();
+
+      // C=0, l=2, m=4 — varied drip configs for each
+      const drips = [
+        { idx: 0, grad: 'dripG',  w: 5,  h: 68,  xOff:  3, stem: 22 }, // C
+        { idx: 2, grad: 'dripG2', w: 4,  h: 90,  xOff: -1, stem: 30 }, // l
+        { idx: 4, grad: 'dripG',  w: 6,  h: 52,  xOff:  2, stem: 16 }, // m
+      ];
+
+      drips.forEach(({ idx, grad, w, h, xOff, stem }) => {
+        const letter = letters[idx];
+        if (!letter) return;
+        const lr = letter.getBoundingClientRect();
+        const x = (lr.left + lr.width / 2 - nameRect.left + xOff);
+        const y = (lr.bottom - nameRect.top);
+
+        // Thin stem from letter base
+        const stemEl = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        stemEl.setAttribute('x', (x - 0.7).toString());
+        stemEl.setAttribute('y', y.toString());
+        stemEl.setAttribute('width', '1.4');
+        stemEl.setAttribute('height', stem.toString());
+        stemEl.setAttribute('fill', `url(#${grad})`);
+        stemEl.setAttribute('rx', '0.7');
+        svg.appendChild(stemEl);
+
+        // Teardrop at bottom of stem
+        const dropY = y + stem;
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const d = `M ${x} ${dropY} C ${x - w * 1.4} ${dropY + h * 0.25}, ${x - w} ${dropY + h * 0.75}, ${x} ${dropY + h} C ${x + w} ${dropY + h * 0.75}, ${x + w * 1.4} ${dropY + h * 0.25}, ${x} ${dropY} Z`;
+        path.setAttribute('d', d);
+        path.setAttribute('fill', `url(#${grad})`);
+        svg.appendChild(path);
+      });
+    }
+    initDrips();
+    window.addEventListener('resize', () => {
+      const svg = document.getElementById('dripSvg');
+      while (svg.children.length > 1) svg.removeChild(svg.lastChild); // keep defs
+      initDrips();
+    });
+
     // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
