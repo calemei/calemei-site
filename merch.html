@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Killtrip — Calemei World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@100;200;300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --red: #d42b2b;
+      --red-dim: #a82222;
+      --chrome: #b8b8b8;
+      --chrome-light: #e8e8e8;
+      --chrome-dim: #666;
+      --black: #060606;
+      --off-black: #0e0e0e;
+      --white: #f0f0f0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--chrome-light);
+      font-family: 'Inter', sans-serif;
+      font-weight: 200;
+      letter-spacing: 0.04em;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Cpath d='M0 20 C15 0,45 0,60 20' fill='none' stroke='rgba(180,180,180,0.045)' stroke-width='0.8'/%3E%3Cpath d='M-30 40 C-15 20,15 20,30 40' fill='none' stroke='rgba(180,180,180,0.045)' stroke-width='0.8'/%3E%3Cpath d='M30 40 C45 20,75 20,90 40' fill='none' stroke='rgba(180,180,180,0.045)' stroke-width='0.8'/%3E%3C/svg%3E");
+      background-size: 60px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .chrome-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--chrome), transparent);
+      z-index: 100;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 90;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(6,6,6,0.95) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.5em;
+      color: var(--chrome-light);
+      text-decoration: none;
+      text-transform: uppercase;
+      position: relative;
+    }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+      position: relative;
+    }
+    .nav-links a {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--chrome-dim);
+      text-decoration: none;
+      transition: color 0.4s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--chrome-light); }
+
+    /* HERO */
+    .drop-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .drop-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.7em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: riseIn 1s ease 0.3s forwards;
+    }
+
+    .drop-title {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(4rem, 16vw, 12rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 0.85;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0;
+      animation: riseIn 1.2s ease 0.5s forwards;
+    }
+
+    .drop-title span {
+      color: var(--red);
+    }
+
+    .drop-sub {
+      margin-top: 2rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--chrome-dim);
+      opacity: 0;
+      animation: riseIn 1s ease 0.9s forwards;
+    }
+
+    .drop-sub em {
+      color: var(--chrome);
+      font-style: normal;
+    }
+
+    .drop-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--red);
+      margin: 2rem auto 0;
+      opacity: 0;
+      animation: riseIn 1s ease 1.1s forwards;
+    }
+
+    /* PRODUCTS */
+    .products {
+      padding: 6rem 4rem;
+      max-width: 1300px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    /* Sweatshirt mockup */
+    .mockup-wrap {
+      position: relative;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(180,180,180,0.08);
+      overflow: hidden;
+      transition: border-color 0.4s;
+    }
+
+    .mockup-wrap:hover { border-color: rgba(180,180,180,0.18); }
+
+    .mockup-bg-black { background: #0a0a0a; }
+    .mockup-bg-white { background: #f0f0f0; }
+
+    .mockup-inner {
+      position: relative;
+      width: 72%;
+      aspect-ratio: 1;
+    }
+
+    /* SVG sweatshirt */
+    .sweatshirt-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .logo-overlay {
+      position: absolute;
+      top: 28%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 52%;
+    }
+
+    .logo-overlay img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* White version — logo needs dark bg removed */
+    .logo-on-white img {
+      mix-blend-mode: multiply;
+    }
+
+    .mockup-tag {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      font-size: 0.5rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--chrome-dim);
+    }
+
+    /* PRODUCT INFO */
+    .product-info {}
+
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .product-price {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--chrome-dim);
+      margin-bottom: 2rem;
+    }
+
+    .product-price span {
+      color: var(--chrome);
+    }
+
+    /* Options */
+    .option-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .option-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--chrome-dim);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .size-options {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .size-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(180,180,180,0.15);
+      background: transparent;
+      color: var(--chrome-dim);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .size-btn:hover {
+      border-color: var(--chrome);
+      color: var(--chrome-light);
+    }
+
+    .size-btn.active {
+      border-color: var(--chrome-light);
+      color: var(--white);
+      background: rgba(180,180,180,0.06);
+    }
+
+    .color-options {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .color-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 1rem 0.5rem 0.6rem;
+      border: 1px solid rgba(180,180,180,0.15);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--chrome-dim);
+    }
+
+    .color-btn:hover, .color-btn.active {
+      border-color: var(--chrome);
+      color: var(--chrome-light);
+    }
+
+    .color-swatch {
+      width: 16px;
+      height: 16px;
+      border: 1px solid rgba(180,180,180,0.2);
+    }
+
+    .qty-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      width: fit-content;
+      border: 1px solid rgba(180,180,180,0.15);
+    }
+
+    .qty-btn {
+      width: 42px;
+      height: 42px;
+      background: transparent;
+      border: none;
+      color: var(--chrome-dim);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-btn:hover { color: var(--chrome-light); background: rgba(180,180,180,0.04); }
+
+    .qty-display {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--chrome-light);
+      border-left: 1px solid rgba(180,180,180,0.15);
+      border-right: 1px solid rgba(180,180,180,0.15);
+    }
+
+    /* Pre-order button */
+    .preorder-btn {
+      margin-top: 2rem;
+      width: 100%;
+      padding: 1.2rem 2rem;
+      background: var(--red);
+      border: none;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .preorder-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.1);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .preorder-btn:hover { background: #b82424; }
+    .preorder-btn:hover::after { opacity: 1; }
+    .preorder-btn:active { transform: scale(0.99); }
+
+    .preorder-note {
+      margin-top: 0.75rem;
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--chrome-dim);
+      text-align: center;
+    }
+
+    /* STATEMENT BAND */
+    .statement-band {
+      border-top: 1px solid rgba(180,180,180,0.06);
+      border-bottom: 1px solid rgba(180,180,180,0.06);
+      padding: 4rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      background: var(--off-black);
+    }
+
+    .statement-band p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      line-height: 1.6;
+    }
+
+    .statement-band em {
+      color: var(--red);
+      font-style: italic;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(180,180,180,0.06);
+      padding: 2.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer span {
+      font-size: 0.5rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(180,180,180,0.2);
+    }
+
+    footer a {
+      color: rgba(180,180,180,0.3);
+      text-decoration: none;
+      transition: color 0.3s;
+      font-size: 0.5rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+    }
+
+    footer a:hover { color: var(--chrome); }
+
+    /* ANIMATIONS */
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .products { padding: 4rem 1.5rem; }
+      .products-grid { grid-template-columns: 1fr; gap: 5rem; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .drop-hero { padding: 7rem 1.5rem 3rem; }
+      .drop-title { font-size: clamp(3rem, 18vw, 6rem); }
+      .statement-band { padding: 3rem 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.8rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chrome-bar"></div>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Calemei</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="merch.html" class="active">Merch</a></li>
+      <li><a href="index.html#music">Music</a></li>
+      <li><a href="index.html#connect">Connect</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="drop-hero">
+    <p class="drop-label">Calemei World &nbsp;·&nbsp; Drop 001</p>
+    <h1 class="drop-title">Kill<span>trip</span></h1>
+    <p class="drop-sub"><em>Limited run.</em> &nbsp;Pre-order open now.</p>
+    <div class="drop-divider"></div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products">
+    <div class="products-grid">
+
+      <!-- BLACK -->
+      <div class="product-card reveal">
+        <div class="mockup-wrap mockup-bg-black">
+          <div class="mockup-inner">
+            <!-- Black crewneck SVG -->
+            <svg class="sweatshirt-svg" viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bk1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#1a1a1a"/>
+                  <stop offset="100%" stop-color="#0a0a0a"/>
+                </linearGradient>
+                <linearGradient id="bk2" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#111"/>
+                  <stop offset="50%" stop-color="#1e1e1e"/>
+                  <stop offset="100%" stop-color="#111"/>
+                </linearGradient>
+              </defs>
+              <!-- Body -->
+              <path d="M 110 100 L 60 130 L 40 220 L 80 225 L 80 400 L 320 400 L 320 225 L 360 220 L 340 130 L 290 100 Z" fill="url(#bk2)" stroke="#2a2a2a" stroke-width="1"/>
+              <!-- Left sleeve -->
+              <path d="M 110 100 L 60 130 L 40 220 L 80 225 L 80 170 L 120 130 Z" fill="#141414" stroke="#222" stroke-width="0.5"/>
+              <!-- Right sleeve -->
+              <path d="M 290 100 L 340 130 L 360 220 L 320 225 L 320 170 L 280 130 Z" fill="#141414" stroke="#222" stroke-width="0.5"/>
+              <!-- Collar -->
+              <path d="M 150 100 Q 200 80 250 100 L 255 115 Q 200 95 145 115 Z" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="0.5"/>
+              <!-- Ribbed hem -->
+              <rect x="80" y="388" width="240" height="12" fill="#131313" stroke="#222" stroke-width="0.5"/>
+              <!-- Ribbed cuffs -->
+              <rect x="40" y="210" width="40" height="12" fill="#131313" stroke="#222" stroke-width="0.5" transform="rotate(-10 60 216)"/>
+              <rect x="320" y="210" width="40" height="12" fill="#131313" stroke="#222" stroke-width="0.5" transform="rotate(10 340 216)"/>
+              <!-- Subtle fold/shadow lines -->
+              <line x1="200" y1="115" x2="200" y2="395" stroke="#0d0d0d" stroke-width="1" opacity="0.5"/>
+            </svg>
+            <!-- Logo on chest -->
+            <div class="logo-overlay">
+              <img src="assets/killtrip-logo.png" alt="Killtrip" />
+            </div>
+          </div>
+          <span class="mockup-tag">Black — Drop 001</span>
+        </div>
+
+        <div class="product-info">
+          <h2 class="product-name">Killtrip Crewneck</h2>
+          <p class="product-price">Pre-order — <span>$65.00 USD</span></p>
+
+          <div class="option-group">
+            <span class="option-label">Size</span>
+            <div class="size-options" id="sizeBlack">
+              <button class="size-btn" data-size="XS">XS</button>
+              <button class="size-btn" data-size="S">S</button>
+              <button class="size-btn active" data-size="M">M</button>
+              <button class="size-btn" data-size="L">L</button>
+              <button class="size-btn" data-size="XL">XL</button>
+              <button class="size-btn" data-size="XXL">2X</button>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <span class="option-label">Color</span>
+            <div class="color-options">
+              <button class="color-btn active">
+                <span class="color-swatch" style="background:#0a0a0a;"></span>Black
+              </button>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <span class="option-label">Quantity</span>
+            <div class="qty-wrap">
+              <button class="qty-btn" onclick="changeQty('qtyBlack',-1)">−</button>
+              <span class="qty-display" id="qtyBlack">1</span>
+              <button class="qty-btn" onclick="changeQty('qtyBlack',1)">+</button>
+            </div>
+          </div>
+
+          <button class="preorder-btn">Pre-Order Now</button>
+          <p class="preorder-note">Ships within 4–6 weeks &nbsp;·&nbsp; Limited units</p>
+        </div>
+      </div>
+
+      <!-- WHITE -->
+      <div class="product-card reveal">
+        <div class="mockup-wrap mockup-bg-white">
+          <div class="mockup-inner">
+            <!-- White crewneck SVG -->
+            <svg class="sweatshirt-svg" viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="wh1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#e8e8e8"/>
+                </linearGradient>
+                <linearGradient id="wh2" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#e0e0e0"/>
+                  <stop offset="50%" stop-color="#f8f8f8"/>
+                  <stop offset="100%" stop-color="#e0e0e0"/>
+                </linearGradient>
+              </defs>
+              <path d="M 110 100 L 60 130 L 40 220 L 80 225 L 80 400 L 320 400 L 320 225 L 360 220 L 340 130 L 290 100 Z" fill="url(#wh2)" stroke="#d0d0d0" stroke-width="1"/>
+              <path d="M 110 100 L 60 130 L 40 220 L 80 225 L 80 170 L 120 130 Z" fill="#e8e8e8" stroke="#ccc" stroke-width="0.5"/>
+              <path d="M 290 100 L 340 130 L 360 220 L 320 225 L 320 170 L 280 130 Z" fill="#e8e8e8" stroke="#ccc" stroke-width="0.5"/>
+              <path d="M 150 100 Q 200 80 250 100 L 255 115 Q 200 95 145 115 Z" fill="#ddd" stroke="#ccc" stroke-width="0.5"/>
+              <rect x="80" y="388" width="240" height="12" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5"/>
+              <rect x="40" y="210" width="40" height="12" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5" transform="rotate(-10 60 216)"/>
+              <rect x="320" y="210" width="40" height="12" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5" transform="rotate(10 340 216)"/>
+              <line x1="200" y1="115" x2="200" y2="395" stroke="#ddd" stroke-width="1" opacity="0.5"/>
+            </svg>
+            <div class="logo-overlay logo-on-white">
+              <img src="assets/killtrip-logo.png" alt="Killtrip" />
+            </div>
+          </div>
+          <span class="mockup-tag" style="color:#888;">White — Drop 001</span>
+        </div>
+
+        <div class="product-info">
+          <h2 class="product-name">Killtrip Crewneck</h2>
+          <p class="product-price">Pre-order — <span>$65.00 USD</span></p>
+
+          <div class="option-group">
+            <span class="option-label">Size</span>
+            <div class="size-options" id="sizeWhite">
+              <button class="size-btn" data-size="XS">XS</button>
+              <button class="size-btn" data-size="S">S</button>
+              <button class="size-btn active" data-size="M">M</button>
+              <button class="size-btn" data-size="L">L</button>
+              <button class="size-btn" data-size="XL">XL</button>
+              <button class="size-btn" data-size="XXL">2X</button>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <span class="option-label">Color</span>
+            <div class="color-options">
+              <button class="color-btn active">
+                <span class="color-swatch" style="background:#f0f0f0;"></span>White
+              </button>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <span class="option-label">Quantity</span>
+            <div class="qty-wrap">
+              <button class="qty-btn" onclick="changeQty('qtyWhite',-1)">−</button>
+              <span class="qty-display" id="qtyWhite">1</span>
+              <button class="qty-btn" onclick="changeQty('qtyWhite',1)">+</button>
+            </div>
+          </div>
+
+          <button class="preorder-btn">Pre-Order Now</button>
+          <p class="preorder-note">Ships within 4–6 weeks &nbsp;·&nbsp; Limited units</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STATEMENT -->
+  <div class="statement-band reveal">
+    <p>
+      This isn't just a sweatshirt.<br />
+      It's a piece of the <em>Calemei World</em> — wear the dream.
+    </p>
+  </div>
+
+  <footer>
+    <span>© 2026 Calemei · Killtrip</span>
+    <a href="index.html">← Back to Calemei</a>
+  </footer>
+
+  <script>
+    // Size selection
+    document.querySelectorAll('.size-options').forEach(group => {
+      group.querySelectorAll('.size-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          group.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+    });
+
+    // Quantity
+    function changeQty(id, delta) {
+      const el = document.getElementById(id);
+      const val = Math.max(1, parseInt(el.textContent) + delta);
+      el.textContent = val;
+    }
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 120);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>
