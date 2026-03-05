@@ -719,52 +719,68 @@
 
   <script>
     // Chrome drip effect
-    async function initDrips() {
-      await document.fonts.ready;
+    function makeDripPath(x, y, rootW, neckW, neckLen, dropR) {
+      const neckY  = y + neckLen;
+      const dropCY = neckY + dropR * 0.6;
+      const dropBY = neckY + dropR * 1.9;
+      return [
+        `M ${x - rootW} ${y}`,
+        `C ${x - rootW} ${y + neckLen * 0.35}, ${x - neckW} ${y + neckLen * 0.65}, ${x - neckW} ${neckY}`,
+        `C ${x - neckW} ${dropCY}, ${x - dropR} ${dropCY + dropR * 0.4}, ${x} ${dropBY}`,
+        `C ${x + dropR} ${dropCY + dropR * 0.4}, ${x + neckW} ${dropCY}, ${x + neckW} ${neckY}`,
+        `C ${x + neckW} ${y + neckLen * 0.65}, ${x + rootW} ${y + neckLen * 0.35}, ${x + rootW} ${y}`,
+        'Z'
+      ].join(' ');
+    }
+
+    function makeSmallDrop(x, y, r) {
+      return `M ${x} ${y} C ${x - r} ${y}, ${x - r} ${y + r * 1.8}, ${x} ${y + r * 2} C ${x + r} ${y + r * 1.8}, ${x + r} ${y}, ${x} ${y} Z`;
+    }
+
+    function buildDrips() {
       const heroName = document.getElementById('heroName');
       const svg = document.getElementById('dripSvg');
       const letters = heroName.querySelectorAll('.letter');
       const nameRect = heroName.getBoundingClientRect();
 
-      // C=0, l=2, m=4 — varied drip configs for each
+      // Remove previously drawn drip elements (keep <defs>)
+      [...svg.children].forEach(c => { if (c.tagName !== 'defs') c.remove(); });
+
+      // C=0, l=2, m=4 — xOff shifts the drip left/right on the letter
       const drips = [
-        { idx: 0, grad: 'dripG',  w: 5,  h: 68,  xOff:  3, stem: 22 }, // C
-        { idx: 2, grad: 'dripG2', w: 4,  h: 90,  xOff: -1, stem: 30 }, // l
-        { idx: 4, grad: 'dripG',  w: 6,  h: 52,  xOff:  2, stem: 16 }, // m
+        { idx: 0, xOff:  6, rootW: 9,  neckW: 2.5, neckLen: 55, dropR: 13 },  // C — long
+        { idx: 2, xOff:  2, rootW: 7,  neckW: 2,   neckLen: 80, dropR: 10 },  // l — longest
+        { idx: 4, xOff: -4, rootW: 11, neckW: 3,   neckLen: 38, dropR: 15 },  // m — short + fat drop
       ];
 
-      drips.forEach(({ idx, grad, w, h, xOff, stem }) => {
+      drips.forEach(({ idx, xOff, rootW, neckW, neckLen, dropR }) => {
         const letter = letters[idx];
         if (!letter) return;
         const lr = letter.getBoundingClientRect();
-        const x = (lr.left + lr.width / 2 - nameRect.left + xOff);
-        const y = (lr.bottom - nameRect.top);
+        const x  = lr.left + lr.width / 2 - nameRect.left + xOff;
+        const y  = lr.bottom - nameRect.top - 4; // slight overlap into letter
 
-        // Thin stem from letter base
-        const stemEl = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        stemEl.setAttribute('x', (x - 0.7).toString());
-        stemEl.setAttribute('y', y.toString());
-        stemEl.setAttribute('width', '1.4');
-        stemEl.setAttribute('height', stem.toString());
-        stemEl.setAttribute('fill', `url(#${grad})`);
-        stemEl.setAttribute('rx', '0.7');
-        svg.appendChild(stemEl);
-
-        // Teardrop at bottom of stem
-        const dropY = y + stem;
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        const d = `M ${x} ${dropY} C ${x - w * 1.4} ${dropY + h * 0.25}, ${x - w} ${dropY + h * 0.75}, ${x} ${dropY + h} C ${x + w} ${dropY + h * 0.75}, ${x + w * 1.4} ${dropY + h * 0.25}, ${x} ${dropY} Z`;
-        path.setAttribute('d', d);
-        path.setAttribute('fill', `url(#${grad})`);
+        path.setAttribute('d', makeDripPath(x, y, rootW, neckW, neckLen, dropR));
+        path.setAttribute('fill', 'url(#dripG)');
         svg.appendChild(path);
+
+        // Small secondary drop slightly offset for realism
+        const sdrop = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const sx = x + rootW * 1.4;
+        const sy = y + neckLen * 0.3;
+        sdrop.setAttribute('d', makeSmallDrop(sx, sy, dropR * 0.35));
+        sdrop.setAttribute('fill', 'url(#dripG2)');
+        svg.appendChild(sdrop);
       });
     }
+
+    async function initDrips() {
+      await document.fonts.ready;
+      buildDrips();
+    }
     initDrips();
-    window.addEventListener('resize', () => {
-      const svg = document.getElementById('dripSvg');
-      while (svg.children.length > 1) svg.removeChild(svg.lastChild); // keep defs
-      initDrips();
-    });
+    window.addEventListener('resize', buildDrips);
 
     // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
