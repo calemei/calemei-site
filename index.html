@@ -141,10 +141,10 @@
     }
 
     .hero-eyebrow {
-      font-size: 0.55rem;
-      letter-spacing: 0.6em;
+      font-size: 0.85rem;
+      letter-spacing: 0.5em;
       text-transform: uppercase;
-      color: var(--chrome-dim);
+      color: #999;
       margin-bottom: 2.5rem;
       opacity: 0;
       animation: riseIn 1.4s ease 0.3s forwards;
@@ -172,31 +172,16 @@
       background-clip: text;
       opacity: 0;
       animation: riseIn 1.4s ease 0.6s forwards;
-      position: relative;
-    }
-
-    .drip-svg {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      overflow: visible;
-      z-index: 3;
     }
 
     .hero-tagline {
       margin-top: 2.5rem;
-      font-size: 0.65rem;
-      letter-spacing: 0.45em;
+      font-size: 0.9rem;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: var(--chrome-dim);
+      color: #aaa;
       opacity: 0;
       animation: riseIn 1.4s ease 1s forwards;
-    }
-
-    .hero-tagline em {
-      color: var(--chrome);
-      font-style: normal;
     }
 
     .scroll-indicator {
@@ -561,6 +546,33 @@
       transform: translateY(0);
     }
 
+    /* HEADER DRIPS */
+    .hdrip {
+      position: fixed;
+      top: 0;
+      width: 2px;
+      border-radius: 0 0 2px 2px;
+      transform: scaleY(0);
+      transform-origin: top center;
+      pointer-events: none;
+      z-index: 8;
+    }
+    .hdrip::after {
+      content: '';
+      position: absolute;
+      bottom: -9px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 14px;
+      border-radius: 50% 50% 50% 50% / 35% 35% 65% 65%;
+    }
+    @keyframes dripReveal {
+      0%   { transform: scaleY(0); opacity: 0; }
+      10%  { opacity: 1; }
+      100% { transform: scaleY(1); opacity: 1; }
+    }
+
     /* MOBILE */
     @media (max-width: 768px) {
       nav { padding: 1.5rem 2rem; }
@@ -580,6 +592,13 @@
 
   <div class="chrome-bar"></div>
 
+  <!-- Header drips from chrome line -->
+  <div class="hdrip" style="left:12%;height:70px;background:linear-gradient(180deg,#c0c0c0,#666);animation:dripReveal 1.6s cubic-bezier(.4,0,.2,1) 0.6s both;"><span style="position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);width:10px;height:14px;background:#666;border-radius:50% 50% 50% 50%/35% 35% 65% 65%;display:block;"></span></div>
+  <div class="hdrip" style="left:28%;height:110px;background:linear-gradient(180deg,#d0d0d0,#777);animation:dripReveal 1.8s cubic-bezier(.4,0,.2,1) 0.9s both;"><span style="position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);width:10px;height:14px;background:#777;border-radius:50% 50% 50% 50%/35% 35% 65% 65%;display:block;"></span></div>
+  <div class="hdrip" style="left:55%;height:85px;background:linear-gradient(180deg,#b8b8b8,#555);animation:dripReveal 1.5s cubic-bezier(.4,0,.2,1) 1.1s both;"><span style="position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);width:10px;height:14px;background:#555;border-radius:50% 50% 50% 50%/35% 35% 65% 65%;display:block;"></span></div>
+  <div class="hdrip" style="left:72%;height:130px;background:linear-gradient(180deg,#c8c8c8,#666);animation:dripReveal 2s cubic-bezier(.4,0,.2,1) 0.7s both;"><span style="position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);width:10px;height:14px;background:#666;border-radius:50% 50% 50% 50%/35% 35% 65% 65%;display:block;"></span></div>
+  <div class="hdrip" style="left:88%;height:60px;background:linear-gradient(180deg,#aaaaaa,#555);animation:dripReveal 1.4s cubic-bezier(.4,0,.2,1) 1.3s both;"><span style="position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);width:10px;height:14px;background:#555;border-radius:50% 50% 50% 50%/35% 35% 65% 65%;display:block;"></span></div>
+
   <nav>
     <a href="/" class="nav-logo">Calemei</a>
     <ul class="nav-links">
@@ -594,23 +613,7 @@
     <div class="hero-bg"></div>
     <div class="hero-content">
       <p class="hero-eyebrow">Artist &nbsp;·&nbsp; Builder &nbsp;·&nbsp; Visionary</p>
-      <h1 class="hero-name" id="heroName">
-        <span class="letter">C</span><span class="letter">a</span><span class="letter">l</span><span class="letter">e</span><span class="letter">m</span><span class="letter">e</span><span class="letter">i</span>
-        <svg class="drip-svg" id="dripSvg" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="dripG" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#d8d8d8" stop-opacity="0.95"/>
-              <stop offset="35%"  stop-color="#aaaaaa" stop-opacity="0.85"/>
-              <stop offset="100%" stop-color="#555555" stop-opacity="0.4"/>
-            </linearGradient>
-            <linearGradient id="dripG2" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#e8e8e8" stop-opacity="0.9"/>
-              <stop offset="50%"  stop-color="#999999" stop-opacity="0.75"/>
-              <stop offset="100%" stop-color="#444444" stop-opacity="0.35"/>
-            </linearGradient>
-          </defs>
-        </svg>
-      </h1>
+      <h1 class="hero-name">Calemei</h1>
       <p class="hero-tagline">what the freaking heck</p>
     </div>
     <div class="scroll-indicator">
@@ -718,104 +721,6 @@
   </footer>
 
   <script>
-    // Chrome drip effect
-    function makeDripPath(x, y, rootW, neckW, neckLen, dropR) {
-      const neckY  = y + neckLen;
-      const dropCY = neckY + dropR * 0.6;
-      const dropBY = neckY + dropR * 1.9;
-      return [
-        `M ${x - rootW} ${y}`,
-        `C ${x - rootW} ${y + neckLen * 0.35}, ${x - neckW} ${y + neckLen * 0.65}, ${x - neckW} ${neckY}`,
-        `C ${x - neckW} ${dropCY}, ${x - dropR} ${dropCY + dropR * 0.4}, ${x} ${dropBY}`,
-        `C ${x + dropR} ${dropCY + dropR * 0.4}, ${x + neckW} ${dropCY}, ${x + neckW} ${neckY}`,
-        `C ${x + neckW} ${y + neckLen * 0.65}, ${x + rootW} ${y + neckLen * 0.35}, ${x + rootW} ${y}`,
-        'Z'
-      ].join(' ');
-    }
-
-    function makeSmallDrop(x, y, r) {
-      return `M ${x} ${y} C ${x - r} ${y}, ${x - r} ${y + r * 1.8}, ${x} ${y + r * 2} C ${x + r} ${y + r * 1.8}, ${x + r} ${y}, ${x} ${y} Z`;
-    }
-
-    function buildDrips() {
-      const heroName = document.getElementById('heroName');
-      const svg = document.getElementById('dripSvg');
-      const letters = heroName.querySelectorAll('.letter');
-      const nameRect = heroName.getBoundingClientRect();
-
-      // Remove previously drawn drip elements (keep <defs>)
-      [...svg.children].forEach(c => { if (c.tagName !== 'defs') c.remove(); });
-
-      // C=0, l=2, m=4 — xOff shifts the drip left/right on the letter
-      const drips = [
-        { idx: 0, xOff:  6, rootW: 9,  neckW: 2.5, neckLen: 55, dropR: 13 },  // C — long
-        { idx: 2, xOff:  2, rootW: 7,  neckW: 2,   neckLen: 80, dropR: 10 },  // l — longest
-        { idx: 4, xOff: -4, rootW: 11, neckW: 3,   neckLen: 38, dropR: 15 },  // m — short + fat drop
-      ];
-
-      drips.forEach(({ idx, xOff, rootW, neckW, neckLen, dropR }) => {
-        const letter = letters[idx];
-        if (!letter) return;
-        const lr = letter.getBoundingClientRect();
-        const x  = lr.left + lr.width / 2 - nameRect.left + xOff;
-        const y  = lr.bottom - nameRect.top - 4; // slight overlap into letter
-
-        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        const delay = idx * 0.4;
-
-        // Clip the drip so it reveals from top to bottom (dripping animation)
-        const clipId = `clip-${idx}`;
-        const clipPath = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
-        clipPath.setAttribute('id', clipId);
-        const clipRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        clipRect.setAttribute('x', (x - rootW - 20).toString());
-        clipRect.setAttribute('y', y.toString());
-        clipRect.setAttribute('width', ((rootW + 20) * 2 + 40).toString());
-        clipRect.setAttribute('height', '0');
-        clipRect.setAttribute('data-full', (neckLen + dropR * 2 + 20).toString());
-        clipPath.appendChild(clipRect);
-        svg.insertBefore(clipPath, svg.querySelector('defs').nextSibling);
-
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', makeDripPath(x, y, rootW, neckW, neckLen, dropR));
-        path.setAttribute('fill', 'url(#dripG)');
-        path.setAttribute('clip-path', `url(#${clipId})`);
-        g.appendChild(path);
-
-        // Small secondary drop
-        const sdrop = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        const sx = x + rootW * 1.4;
-        const sy = y + neckLen * 0.3;
-        sdrop.setAttribute('d', makeSmallDrop(sx, sy, dropR * 0.35));
-        sdrop.setAttribute('fill', 'url(#dripG2)');
-        sdrop.setAttribute('clip-path', `url(#${clipId})`);
-        g.appendChild(sdrop);
-
-        svg.appendChild(g);
-
-        // Animate the clip rect height to simulate dripping
-        const fullH = parseFloat(clipRect.getAttribute('data-full'));
-        const startTime = performance.now() + delay * 1000 + 1200;
-        const duration = 1800 + idx * 300;
-
-        function animate(now) {
-          if (now < startTime) { requestAnimationFrame(animate); return; }
-          const progress = Math.min((now - startTime) / duration, 1);
-          const ease = 1 - Math.pow(1 - progress, 3);
-          clipRect.setAttribute('height', (ease * fullH).toString());
-          if (progress < 1) requestAnimationFrame(animate);
-        }
-        requestAnimationFrame(animate);
-      });
-    }
-
-    async function initDrips() {
-      await document.fonts.ready;
-      buildDrips();
-    }
-    initDrips();
-    window.addEventListener('resize', buildDrips);
-
     // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
@@ -851,10 +756,12 @@
 
     playBtn.addEventListener('click', () => {
       if (audio.paused) {
-        audio.play();
-        playIcon.style.display = 'none';
-        pauseIcon.style.display = 'flex';
-        progressWrap.style.display = 'block';
+        audio.load();
+        audio.play().then(() => {
+          playIcon.style.display = 'none';
+          pauseIcon.style.display = 'flex';
+          progressWrap.style.display = 'block';
+        }).catch(() => {});
       } else {
         audio.pause();
         playIcon.style.display = 'block';
