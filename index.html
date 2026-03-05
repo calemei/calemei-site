@@ -761,17 +761,52 @@
         const y  = lr.bottom - nameRect.top - 4; // slight overlap into letter
 
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        const delay = idx * 0.4;
+
+        // Clip the drip so it reveals from top to bottom (dripping animation)
+        const clipId = `clip-${idx}`;
+        const clipPath = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
+        clipPath.setAttribute('id', clipId);
+        const clipRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        clipRect.setAttribute('x', (x - rootW - 20).toString());
+        clipRect.setAttribute('y', y.toString());
+        clipRect.setAttribute('width', ((rootW + 20) * 2 + 40).toString());
+        clipRect.setAttribute('height', '0');
+        clipRect.setAttribute('data-full', (neckLen + dropR * 2 + 20).toString());
+        clipPath.appendChild(clipRect);
+        svg.insertBefore(clipPath, svg.querySelector('defs').nextSibling);
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', makeDripPath(x, y, rootW, neckW, neckLen, dropR));
         path.setAttribute('fill', 'url(#dripG)');
-        svg.appendChild(path);
+        path.setAttribute('clip-path', `url(#${clipId})`);
+        g.appendChild(path);
 
-        // Small secondary drop slightly offset for realism
+        // Small secondary drop
         const sdrop = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         const sx = x + rootW * 1.4;
         const sy = y + neckLen * 0.3;
         sdrop.setAttribute('d', makeSmallDrop(sx, sy, dropR * 0.35));
         sdrop.setAttribute('fill', 'url(#dripG2)');
-        svg.appendChild(sdrop);
+        sdrop.setAttribute('clip-path', `url(#${clipId})`);
+        g.appendChild(sdrop);
+
+        svg.appendChild(g);
+
+        // Animate the clip rect height to simulate dripping
+        const fullH = parseFloat(clipRect.getAttribute('data-full'));
+        const startTime = performance.now() + delay * 1000 + 1200;
+        const duration = 1800 + idx * 300;
+
+        function animate(now) {
+          if (now < startTime) { requestAnimationFrame(animate); return; }
+          const progress = Math.min((now - startTime) / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          clipRect.setAttribute('height', (ease * fullH).toString());
+          if (progress < 1) requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
       });
     }
 
