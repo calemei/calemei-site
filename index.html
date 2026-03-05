@@ -38,6 +38,17 @@
       overflow-x: hidden;
     }
 
+    /* Snakeskin pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='40'%3E%3Cpath d='M0 20 C15 0,45 0,60 20' fill='none' stroke='rgba(180,180,180,0.045)' stroke-width='0.8'/%3E%3Cpath d='M-30 40 C-15 20,15 20,30 40' fill='none' stroke='rgba(180,180,180,0.045)' stroke-width='0.8'/%3E%3Cpath d='M30 40 C45 20,75 20,90 40' fill='none' stroke='rgba(180,180,180,0.045)' stroke-width='0.8'/%3E%3C/svg%3E");
+      background-size: 60px 40px;
+      pointer-events: none;
+      z-index: 998;
+    }
+
     /* Grain */
     body::after {
       content: '';
