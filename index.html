@@ -6,7 +6,7 @@
   <title>CALEMEI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@200;300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@100;200;300;400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after {
       margin: 0;
@@ -15,397 +15,736 @@
     }
 
     :root {
-      --chrome: #c0c0c0;
+      --chrome: #b8b8b8;
       --chrome-light: #e8e8e8;
-      --chrome-dark: #888;
-      --black: #080808;
-      --off-black: #111;
-      --text: #d4d4d4;
+      --chrome-dim: #666;
+      --black: #060606;
+      --off-black: #0e0e0e;
+      --deep: #0a0a0a;
+      --text: #c8c8c8;
+      --white: #f0f0f0;
     }
 
-    html, body {
-      height: 100%;
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
       background: var(--black);
       color: var(--text);
       font-family: 'Inter', sans-serif;
       font-weight: 200;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       overflow-x: hidden;
     }
 
-    /* Subtle grain overlay */
-    body::before {
+    /* Grain */
+    body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 100;
-      opacity: 0.4;
+      z-index: 999;
     }
 
-    /* Chrome line at top */
-    .chrome-line {
+    /* Chrome top line */
+    .chrome-bar {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--chrome), transparent);
-      z-index: 10;
+      background: linear-gradient(90deg, transparent 0%, var(--chrome) 30%, var(--chrome-light) 50%, var(--chrome) 70%, transparent 100%);
+      z-index: 100;
     }
 
+    /* NAV */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 2rem 3rem;
+      top: 0; left: 0; right: 0;
+      padding: 2rem 4rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 9;
+      z-index: 90;
+      mix-blend-mode: normal;
+    }
+
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(6,6,6,0.9) 0%, transparent 100%);
+      pointer-events: none;
     }
 
     .nav-logo {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 300;
-      letter-spacing: 0.4em;
+      letter-spacing: 0.5em;
       color: var(--chrome-light);
       text-decoration: none;
       text-transform: uppercase;
+      position: relative;
     }
 
     .nav-links {
       display: flex;
-      gap: 2.5rem;
+      gap: 3rem;
       list-style: none;
+      position: relative;
     }
 
     .nav-links a {
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--chrome-dark);
+      color: var(--chrome-dim);
       text-decoration: none;
-      transition: color 0.3s ease;
+      transition: color 0.4s;
     }
 
-    .nav-links a:hover {
-      color: var(--chrome-light);
-    }
+    .nav-links a:hover { color: var(--chrome-light); }
 
-    /* Hero */
+    /* HERO */
     .hero {
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 2rem;
       position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(180,180,180,0.04) 0%, transparent 70%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
     }
 
     .hero-eyebrow {
-      font-size: 0.6rem;
-      letter-spacing: 0.5em;
+      font-size: 0.55rem;
+      letter-spacing: 0.6em;
       text-transform: uppercase;
-      color: var(--chrome-dark);
-      margin-bottom: 2rem;
+      color: var(--chrome-dim);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: riseIn 1.4s ease 0.3s forwards;
     }
 
     .hero-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(5rem, 18vw, 14rem);
+      font-size: clamp(6rem, 20vw, 18rem);
       font-weight: 300;
-      letter-spacing: 0.15em;
-      line-height: 0.9;
-      background: linear-gradient(135deg, #888 0%, #e8e8e8 40%, #c0c0c0 60%, #666 100%);
+      letter-spacing: 0.12em;
+      line-height: 0.85;
+      text-transform: uppercase;
+      background: linear-gradient(
+        160deg,
+        #555 0%,
+        #a0a0a0 20%,
+        #e0e0e0 40%,
+        #ffffff 50%,
+        #d0d0d0 60%,
+        #888 80%,
+        #444 100%
+      );
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-transform: uppercase;
-      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: riseIn 1.4s ease 0.6s forwards;
     }
 
-    .hero-sub {
+    .hero-tagline {
+      margin-top: 2.5rem;
       font-size: 0.65rem;
-      letter-spacing: 0.4em;
+      letter-spacing: 0.45em;
       text-transform: uppercase;
-      color: var(--chrome-dark);
-      line-height: 2;
+      color: var(--chrome-dim);
+      opacity: 0;
+      animation: riseIn 1.4s ease 1s forwards;
     }
 
-    .hero-sub span {
+    .hero-tagline em {
       color: var(--chrome);
+      font-style: normal;
     }
 
-    /* Chrome divider */
-    .divider {
-      width: 60px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--chrome), transparent);
-      margin: 3rem auto;
-    }
-
-    /* Scroll indicator */
-    .scroll-hint {
+    .scroll-indicator {
       position: absolute;
-      bottom: 2.5rem;
+      bottom: 3rem;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
+      opacity: 0;
+      animation: riseIn 1s ease 1.8s forwards;
     }
 
-    .scroll-hint span {
-      font-size: 0.55rem;
-      letter-spacing: 0.35em;
+    .scroll-indicator span {
+      font-size: 0.5rem;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: var(--chrome-dark);
+      color: var(--chrome-dim);
     }
 
     .scroll-line {
       width: 1px;
-      height: 40px;
-      background: linear-gradient(180deg, var(--chrome-dark), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
+      height: 50px;
+      background: linear-gradient(180deg, var(--chrome-dim), transparent);
+      animation: pulse 2.5s ease-in-out infinite;
     }
 
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(1.2); }
+    /* QUOTE SECTIONS */
+    .quote-block {
+      padding: 10rem 4rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* Sections */
-    section {
-      padding: 8rem 3rem;
-      max-width: 900px;
+    .quote-block.alt {
+      background: var(--off-black);
+    }
+
+    .quote-inner {
+      max-width: 800px;
+      text-align: center;
+      will-change: transform;
+    }
+
+    .quote-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      line-height: 0.5;
+      color: rgba(180,180,180,0.15);
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      line-height: 1.5;
+      letter-spacing: 0.03em;
+      color: var(--white);
+    }
+
+    .quote-text em {
+      font-style: italic;
+      color: var(--chrome);
+    }
+
+    .quote-attr {
+      margin-top: 2rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--chrome-dim);
+    }
+
+    /* CHROME DIVIDER */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(180,180,180,0.2), transparent);
+      margin: 0 4rem;
+    }
+
+    /* PILLARS */
+    .pillars {
+      padding: 10rem 4rem;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
     .section-label {
-      font-size: 0.55rem;
-      letter-spacing: 0.5em;
+      font-size: 0.5rem;
+      letter-spacing: 0.6em;
       text-transform: uppercase;
-      color: var(--chrome-dark);
-      margin-bottom: 3rem;
+      color: var(--chrome-dim);
+      margin-bottom: 5rem;
+      text-align: center;
     }
 
-    /* Music section */
-    .music-grid {
+    .pillar-grid {
       display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 1px;
-      background: rgba(192,192,192,0.1);
-      border: 1px solid rgba(192,192,192,0.1);
+      background: rgba(180,180,180,0.08);
+      border: 1px solid rgba(180,180,180,0.08);
     }
 
-    .track {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem 2rem;
+    .pillar {
+      padding: 4rem 3rem;
       background: var(--black);
-      transition: background 0.3s ease;
-      cursor: pointer;
-      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
     }
 
-    .track:hover {
+    .pillar:hover {
       background: var(--off-black);
     }
 
-    .track-num {
-      font-size: 0.6rem;
-      color: var(--chrome-dark);
-      letter-spacing: 0.2em;
-      min-width: 2rem;
+    .pillar::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--chrome-dim), transparent);
+      transform: scaleX(0);
+      transition: transform 0.6s ease;
+    }
+
+    .pillar:hover::before {
+      transform: scaleX(1);
+    }
+
+    .pillar-num {
+      font-size: 0.5rem;
+      letter-spacing: 0.4em;
+      color: var(--chrome-dim);
+      margin-bottom: 2rem;
+    }
+
+    .pillar-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--chrome-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .pillar-desc {
+      font-size: 0.7rem;
+      line-height: 2;
+      color: var(--chrome-dim);
+      letter-spacing: 0.08em;
+    }
+
+    /* MUSIC */
+    .music-section {
+      padding: 10rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .track-row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 2.5rem;
+      border: 1px solid rgba(180,180,180,0.08);
+      cursor: pointer;
+      transition: border-color 0.4s, background 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track-row::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(180,180,180,0.03), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .track-row:hover {
+      border-color: rgba(180,180,180,0.2);
+      background: var(--off-black);
+    }
+
+    .track-row:hover::before { opacity: 1; }
+
+    .play-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(180,180,180,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: border-color 0.3s, background 0.3s;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .play-btn:hover {
+      border-color: var(--chrome);
+      background: rgba(180,180,180,0.05);
+    }
+
+    .play-icon {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 6px 0 6px 10px;
+      border-color: transparent transparent transparent var(--chrome);
+      margin-left: 3px;
+      transition: opacity 0.3s;
+    }
+
+    .pause-icon {
+      display: none;
+      gap: 3px;
+    }
+
+    .pause-bar {
+      width: 3px;
+      height: 12px;
+      background: var(--chrome);
+    }
+
+    .track-info {
+      flex: 1;
     }
 
     .track-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
+      font-size: 1.4rem;
       font-weight: 300;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       color: var(--chrome-light);
-      flex: 1;
+    }
+
+    .track-meta {
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--chrome-dim);
+      margin-top: 0.4rem;
     }
 
     .track-duration {
       font-size: 0.6rem;
-      color: var(--chrome-dark);
       letter-spacing: 0.2em;
+      color: var(--chrome-dim);
     }
 
-    /* Statement */
-    .statement {
+    /* Progress bar */
+    .progress-wrap {
+      height: 1px;
+      background: rgba(180,180,180,0.1);
+      margin-top: 1.5rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--chrome-dim), var(--chrome));
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    audio { display: none; }
+
+    /* CONNECT */
+    .connect-section {
+      padding: 8rem 4rem;
       text-align: center;
-      padding: 6rem 3rem;
     }
 
-    .statement-quote {
+    .connect-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-size: clamp(2.5rem, 6vw, 5rem);
       font-weight: 300;
-      line-height: 1.6;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.15em;
       color: var(--chrome-light);
-      max-width: 700px;
-      margin: 0 auto 2rem;
-    }
-
-    .statement-attr {
-      font-size: 0.6rem;
-      letter-spacing: 0.4em;
+      margin-bottom: 4rem;
       text-transform: uppercase;
-      color: var(--chrome-dark);
     }
 
-    /* Social links */
-    .social-links {
+    .social-row {
       display: flex;
       justify-content: center;
-      gap: 3rem;
-      padding: 4rem 3rem 6rem;
+      gap: 4rem;
+      flex-wrap: wrap;
     }
 
-    .social-links a {
-      font-size: 0.6rem;
-      letter-spacing: 0.35em;
+    .social-link {
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: var(--chrome-dark);
+      color: var(--chrome-dim);
       text-decoration: none;
-      transition: color 0.3s ease;
       position: relative;
+      padding-bottom: 6px;
+      transition: color 0.4s;
     }
 
-    .social-links a::after {
+    .social-link::after {
       content: '';
       position: absolute;
-      bottom: -4px;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       height: 1px;
-      background: var(--chrome);
+      background: linear-gradient(90deg, transparent, var(--chrome), transparent);
       transform: scaleX(0);
-      transition: transform 0.3s ease;
+      transition: transform 0.4s;
     }
 
-    .social-links a:hover {
-      color: var(--chrome-light);
-    }
+    .social-link:hover { color: var(--chrome-light); }
+    .social-link:hover::after { transform: scaleX(1); }
 
-    .social-links a:hover::after {
-      transform: scaleX(1);
-    }
-
-    /* Footer */
+    /* FOOTER */
     footer {
-      border-top: 1px solid rgba(192,192,192,0.08);
-      padding: 2rem 3rem;
+      border-top: 1px solid rgba(180,180,180,0.06);
+      padding: 2.5rem 4rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     footer span {
-      font-size: 0.55rem;
-      letter-spacing: 0.3em;
+      font-size: 0.5rem;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: rgba(192,192,192,0.25);
+      color: rgba(180,180,180,0.2);
     }
 
-    /* Animations */
-    .fade-in {
+    /* ANIMATIONS */
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(1.15); }
+    }
+
+    .reveal {
       opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 1.2s ease forwards;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
     }
 
-    .fade-in:nth-child(1) { animation-delay: 0.2s; }
-    .fade-in:nth-child(2) { animation-delay: 0.5s; }
-    .fade-in:nth-child(3) { animation-delay: 0.8s; }
-
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    @media (max-width: 600px) {
-      nav { padding: 1.5rem; }
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 1.5rem 2rem; }
       .nav-links { display: none; }
-      section { padding: 5rem 1.5rem; }
-      .social-links { gap: 1.5rem; flex-wrap: wrap; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .quote-block { padding: 6rem 2rem; }
+      .pillars { padding: 6rem 2rem; }
+      .pillar-grid { grid-template-columns: 1fr; }
+      .music-section { padding: 6rem 2rem; }
+      .connect-section { padding: 6rem 2rem; }
+      .social-row { gap: 2rem; }
+      footer { padding: 2rem; flex-direction: column; gap: 1rem; }
+      .divider { margin: 0 2rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="chrome-line"></div>
+  <div class="chrome-bar"></div>
 
   <nav>
     <a href="/" class="nav-logo">Calemei</a>
     <ul class="nav-links">
       <li><a href="#music">Music</a></li>
-      <li><a href="#about">About</a></li>
+      <li><a href="#journey">Journey</a></li>
       <li><a href="#connect">Connect</a></li>
     </ul>
   </nav>
 
-  <!-- Hero -->
+  <!-- HERO -->
   <section class="hero">
-    <p class="hero-eyebrow fade-in">Artist &nbsp;·&nbsp; Creator &nbsp;·&nbsp; Visionary</p>
-    <h1 class="hero-name fade-in">Calemei</h1>
-    <p class="hero-sub fade-in">
-      <span>After all,</span> I am only human.
-    </p>
-    <div class="scroll-hint">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Artist &nbsp;·&nbsp; Builder &nbsp;·&nbsp; Visionary</p>
+      <h1 class="hero-name">Calemei</h1>
+      <p class="hero-tagline"><em>After all,</em> &nbsp;I am only human.</p>
+    </div>
+    <div class="scroll-indicator">
       <span>Scroll</span>
       <div class="scroll-line"></div>
     </div>
   </section>
 
-  <!-- Music -->
-  <section id="music">
+  <!-- QUOTE 1 -->
+  <div class="quote-block">
+    <div class="quote-inner reveal" data-parallax="0.15">
+      <span class="quote-mark">"</span>
+      <p class="quote-text">We're not just building machines,<br />we're building a <em>future.</em></p>
+      <p class="quote-attr">— Calemei</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MUSIC -->
+  <section class="music-section" id="music">
     <p class="section-label">Music</p>
-    <div class="music-grid">
-      <div class="track">
-        <span class="track-num">01</span>
-        <span class="track-title">Coming Soon</span>
-        <span class="track-duration">—</span>
+
+    <div class="track-row reveal" id="trackRow">
+      <button class="play-btn" id="playBtn" aria-label="Play">
+        <span class="play-icon" id="playIcon"></span>
+        <span class="pause-icon" id="pauseIcon">
+          <span class="pause-bar"></span>
+          <span class="pause-bar"></span>
+        </span>
+      </button>
+      <div class="track-info">
+        <div class="track-title">It's Deep</div>
+        <div class="track-meta">Calemei &nbsp;·&nbsp; 2026</div>
+      </div>
+      <span class="track-duration" id="trackDuration">0:27</span>
+    </div>
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <audio id="audio" src="music/itsdeepmaster_trim.mp3" preload="none"></audio>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- QUOTE 2 -->
+  <div class="quote-block alt">
+    <div class="quote-inner reveal" data-parallax="0.1">
+      <span class="quote-mark">"</span>
+      <p class="quote-text">Every road, every note, every pixel —<br /><em>it all leads to who we become.</em></p>
+      <p class="quote-attr">— Calemei</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PILLARS -->
+  <section class="pillars" id="journey">
+    <p class="section-label">The Journey</p>
+    <div class="pillar-grid">
+      <div class="pillar reveal">
+        <p class="pillar-num">01</p>
+        <h3 class="pillar-title">Music</h3>
+        <p class="pillar-desc">Sound as a language. Every track a chapter — raw, honest, and built to move you.</p>
+      </div>
+      <div class="pillar reveal">
+        <p class="pillar-num">02</p>
+        <h3 class="pillar-title">The Raptor</h3>
+        <p class="pillar-desc">Not just a build. A statement. Every modification a reflection of the vision — power, precision, presence.</p>
+      </div>
+      <div class="pillar reveal">
+        <p class="pillar-num">03</p>
+        <h3 class="pillar-title">The Machine</h3>
+        <p class="pillar-desc">The dream rig. Where creativity meets hardware. Building the studio, frame by frame.</p>
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- Statement -->
-  <div class="statement" id="about">
-    <blockquote class="statement-quote">
-      "Breaking the mold. Getting close with God.<br />
-      Building something that lasts."
-    </blockquote>
-    <p class="statement-attr">— Calemei</p>
+  <!-- QUOTE 3 -->
+  <div class="quote-block">
+    <div class="quote-inner reveal" data-parallax="0.12">
+      <span class="quote-mark">"</span>
+      <p class="quote-text">Fast isn't just speed —<br />it's <em>how we move toward our vision.</em></p>
+      <p class="quote-attr">— Calemei</p>
+    </div>
   </div>
 
-  <div class="divider"></div>
-
-  <!-- Connect -->
-  <div class="social-links" id="connect">
-    <a href="https://instagram.com/calemei" target="_blank" rel="noopener">Instagram</a>
-    <a href="#" target="_blank" rel="noopener">TikTok</a>
-    <a href="#" target="_blank" rel="noopener">YouTube</a>
-    <a href="#" target="_blank" rel="noopener">Spotify</a>
-  </div>
+  <!-- CONNECT -->
+  <section class="connect-section" id="connect">
+    <h2 class="connect-title reveal">Connect</h2>
+    <div class="social-row reveal">
+      <a href="https://instagram.com/calemei" target="_blank" rel="noopener" class="social-link">Instagram</a>
+      <a href="#" target="_blank" rel="noopener" class="social-link">TikTok</a>
+      <a href="#" target="_blank" rel="noopener" class="social-link">YouTube</a>
+      <a href="#" target="_blank" rel="noopener" class="social-link">Spotify</a>
+    </div>
+  </section>
 
   <footer>
     <span>© 2026 Calemei</span>
     <span>All rights reserved</span>
   </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Parallax on quote blocks
+    const parallaxEls = document.querySelectorAll('[data-parallax]');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      parallaxEls.forEach(el => {
+        const speed = parseFloat(el.dataset.parallax);
+        const rect = el.closest('.quote-block').getBoundingClientRect();
+        const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed;
+        el.style.transform = `translateY(${offset}px)`;
+      });
+    }, { passive: true });
+
+    // Audio player
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const progressBar = document.getElementById('progressBar');
+    const progressWrap = document.getElementById('progressWrap');
+    const trackDuration = document.getElementById('trackDuration');
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'flex';
+        progressWrap.style.display = 'block';
+      } else {
+        audio.pause();
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+      }
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const pct = (audio.currentTime / audio.duration) * 100;
+      progressBar.style.width = pct + '%';
+    });
+
+    audio.addEventListener('ended', () => {
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+      progressBar.style.width = '0%';
+      audio.currentTime = 0;
+    });
+
+    progressWrap.addEventListener('click', (e) => {
+      const rect = progressWrap.getBoundingClientRect();
+      const pct = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = pct * audio.duration;
+    });
+  </script>
 
 </body>
 </html>
