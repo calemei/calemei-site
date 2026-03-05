@@ -349,6 +349,17 @@
       margin: 0 auto;
     }
 
+    .album-art {
+      display: block;
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      object-position: center 30%;
+      border: 1px solid rgba(180,180,180,0.1);
+      margin-bottom: 1.4rem;
+      filter: grayscale(20%) brightness(0.9);
+    }
+
     .track-row {
       display: flex;
       align-items: center;
@@ -664,6 +675,8 @@
   <section class="music-section" id="music">
     <p class="section-label">Music</p>
 
+    <img src="assets/album-art.jpg" alt="" class="album-art" />
+
     <div class="track-row reveal" id="trackRow">
       <button class="play-btn" id="playBtn" aria-label="Play">
         <span class="play-icon" id="playIcon"></span>
@@ -682,7 +695,7 @@
       <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <audio id="audio" src="music/itsdeepmaster_trim.mp3" preload="none"></audio>
+    <audio id="audio" src="music/itsdeepmaster_trim.mp3" preload="auto"></audio>
   </section>
 
   <div class="divider"></div>
@@ -783,7 +796,6 @@
 
     playBtn.addEventListener('click', () => {
       if (audio.paused) {
-        audio.load();
         audio.play().then(() => {
           playIcon.style.display = 'none';
           pauseIcon.style.display = 'flex';
