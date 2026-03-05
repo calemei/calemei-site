@@ -116,20 +116,12 @@
       animation: riseIn 1s ease 0.3s forwards;
     }
 
-    .drop-title {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(4rem, 16vw, 12rem);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      line-height: 0.85;
-      text-transform: uppercase;
-      color: var(--white);
+    .drop-logo {
+      width: clamp(260px, 50vw, 520px);
+      height: auto;
       opacity: 0;
       animation: riseIn 1.2s ease 0.5s forwards;
-    }
-
-    .drop-title span {
-      color: var(--red);
+      filter: drop-shadow(0 0 40px rgba(212,43,43,0.15));
     }
 
     .drop-sub {
@@ -208,21 +200,16 @@
 
     .logo-overlay {
       position: absolute;
-      top: 28%;
+      top: 22%;
       left: 50%;
       transform: translateX(-50%);
-      width: 52%;
+      width: 40%;
     }
 
     .logo-overlay img {
       width: 100%;
       height: auto;
       display: block;
-    }
-
-    /* White version — logo needs dark bg removed */
-    .logo-on-white img {
-      mix-blend-mode: multiply;
     }
 
     .mockup-tag {
@@ -517,7 +504,7 @@
   <!-- HERO -->
   <section class="drop-hero">
     <p class="drop-label">Calemei World &nbsp;·&nbsp; Drop 001</p>
-    <h1 class="drop-title">Kill<span>trip</span></h1>
+    <img src="assets/killtrip-logo-transparent.png" alt="Killtrip" class="drop-logo" />
     <p class="drop-sub"><em>Limited run.</em> &nbsp;Pre-order open now.</p>
     <div class="drop-divider"></div>
   </section>
@@ -530,38 +517,67 @@
       <div class="product-card reveal">
         <div class="mockup-wrap mockup-bg-black">
           <div class="mockup-inner">
-            <!-- Black crewneck SVG -->
-            <svg class="sweatshirt-svg" viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+            <!-- Black crewneck — realistic flat lay -->
+            <svg class="sweatshirt-svg" viewBox="0 0 600 580" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="bk1" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#1a1a1a"/>
-                  <stop offset="100%" stop-color="#0a0a0a"/>
+                <linearGradient id="bBody" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#161616"/>
+                  <stop offset="30%" stop-color="#222"/>
+                  <stop offset="50%" stop-color="#282828"/>
+                  <stop offset="70%" stop-color="#222"/>
+                  <stop offset="100%" stop-color="#161616"/>
                 </linearGradient>
-                <linearGradient id="bk2" x1="0" y1="0" x2="1" y2="0">
+                <linearGradient id="bSleeveL" x1="0" y1="0" x2="1" y2="0">
                   <stop offset="0%" stop-color="#111"/>
-                  <stop offset="50%" stop-color="#1e1e1e"/>
+                  <stop offset="100%" stop-color="#1e1e1e"/>
+                </linearGradient>
+                <linearGradient id="bSleeveR" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#1e1e1e"/>
                   <stop offset="100%" stop-color="#111"/>
                 </linearGradient>
+                <linearGradient id="bShadow" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#000" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+                </linearGradient>
               </defs>
-              <!-- Body -->
-              <path d="M 110 100 L 60 130 L 40 220 L 80 225 L 80 400 L 320 400 L 320 225 L 360 220 L 340 130 L 290 100 Z" fill="url(#bk2)" stroke="#2a2a2a" stroke-width="1"/>
+
               <!-- Left sleeve -->
-              <path d="M 110 100 L 60 130 L 40 220 L 80 225 L 80 170 L 120 130 Z" fill="#141414" stroke="#222" stroke-width="0.5"/>
+              <path d="M 185 105 C 160 108, 120 118, 90 130 C 60 142, 30 158, 10 175 C 0 183, 0 195, 5 205 C 12 218, 28 222, 45 218 C 55 215, 62 210, 68 204 C 88 188, 108 172, 128 162 C 148 152, 162 148, 175 146 L 178 108 Z" fill="url(#bSleeveL)" stroke="#1a1a1a" stroke-width="0.8"/>
+              <!-- Left cuff ribbing -->
+              <path d="M 5 205 C 12 218, 28 222, 45 218 C 35 228, 18 228, 8 218 Z" fill="#111" stroke="#111" stroke-width="0.5"/>
+
               <!-- Right sleeve -->
-              <path d="M 290 100 L 340 130 L 360 220 L 320 225 L 320 170 L 280 130 Z" fill="#141414" stroke="#222" stroke-width="0.5"/>
-              <!-- Collar -->
-              <path d="M 150 100 Q 200 80 250 100 L 255 115 Q 200 95 145 115 Z" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="0.5"/>
-              <!-- Ribbed hem -->
-              <rect x="80" y="388" width="240" height="12" fill="#131313" stroke="#222" stroke-width="0.5"/>
-              <!-- Ribbed cuffs -->
-              <rect x="40" y="210" width="40" height="12" fill="#131313" stroke="#222" stroke-width="0.5" transform="rotate(-10 60 216)"/>
-              <rect x="320" y="210" width="40" height="12" fill="#131313" stroke="#222" stroke-width="0.5" transform="rotate(10 340 216)"/>
-              <!-- Subtle fold/shadow lines -->
-              <line x1="200" y1="115" x2="200" y2="395" stroke="#0d0d0d" stroke-width="1" opacity="0.5"/>
+              <path d="M 415 105 C 440 108, 480 118, 510 130 C 540 142, 570 158, 590 175 C 600 183, 600 195, 595 205 C 588 218, 572 222, 555 218 C 545 215, 538 210, 532 204 C 512 188, 492 172, 472 162 C 452 152, 438 148, 425 146 L 422 108 Z" fill="url(#bSleeveR)" stroke="#1a1a1a" stroke-width="0.8"/>
+              <!-- Right cuff ribbing -->
+              <path d="M 595 205 C 588 218, 572 222, 555 218 C 565 228, 582 228, 592 218 Z" fill="#111" stroke="#111" stroke-width="0.5"/>
+
+              <!-- Main body -->
+              <path d="M 178 108 L 175 146 C 162 148, 148 152, 135 160 L 130 530 L 470 530 L 465 160 C 452 152, 438 148, 425 146 L 422 108 C 400 100, 360 94, 300 92 C 240 94, 200 100, 178 108 Z" fill="url(#bBody)" stroke="#1e1e1e" stroke-width="0.8"/>
+
+              <!-- Collar ribbing -->
+              <path d="M 210 105 C 225 88, 255 80, 300 78 C 345 80, 375 88, 390 105 L 385 118 C 368 103, 340 96, 300 94 C 260 96, 232 103, 215 118 Z" fill="#131313" stroke="#1a1a1a" stroke-width="0.8"/>
+              <!-- Collar inner shadow -->
+              <path d="M 215 118 C 232 103, 260 96, 300 94 C 340 96, 368 103, 385 118 C 368 110, 340 104, 300 102 C 260 104, 232 110, 215 118 Z" fill="#0a0a0a" opacity="0.5"/>
+
+              <!-- Hem ribbing -->
+              <rect x="130" y="515" width="340" height="16" rx="1" fill="#131313" stroke="#1a1a1a" stroke-width="0.5"/>
+              <!-- Hem lines -->
+              <line x1="130" y1="519" x2="470" y2="519" stroke="#1e1e1e" stroke-width="0.5" opacity="0.6"/>
+              <line x1="130" y1="523" x2="470" y2="523" stroke="#1e1e1e" stroke-width="0.5" opacity="0.4"/>
+
+              <!-- Center seam / subtle fold shadow -->
+              <line x1="300" y1="118" x2="300" y2="515" stroke="#1a1a1a" stroke-width="1.5" opacity="0.4"/>
+
+              <!-- Armhole seam shadows -->
+              <path d="M 175 146 C 162 148, 148 152, 135 162" stroke="#111" stroke-width="2" fill="none" opacity="0.7"/>
+              <path d="M 425 146 C 438 148, 452 152, 465 162" stroke="#111" stroke-width="2" fill="none" opacity="0.7"/>
+
+              <!-- Shoulder shadow overlay -->
+              <path d="M 178 108 C 200 100, 240 94, 300 92 C 360 94, 400 100, 422 108 L 422 130 C 400 122, 360 116, 300 114 C 240 116, 200 122, 178 130 Z" fill="url(#bShadow)" opacity="0.5"/>
             </svg>
             <!-- Logo on chest -->
             <div class="logo-overlay">
-              <img src="assets/killtrip-logo.png" alt="Killtrip" />
+              <img src="assets/killtrip-logo-transparent.png" alt="Killtrip" />
             </div>
           </div>
           <span class="mockup-tag">Black — Drop 001</span>
@@ -610,30 +626,62 @@
       <div class="product-card reveal">
         <div class="mockup-wrap mockup-bg-white">
           <div class="mockup-inner">
-            <!-- White crewneck SVG -->
-            <svg class="sweatshirt-svg" viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+            <!-- White crewneck — realistic flat lay -->
+            <svg class="sweatshirt-svg" viewBox="0 0 600 580" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="wh1" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="100%" stop-color="#e8e8e8"/>
+                <linearGradient id="wBody" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#d8d8d8"/>
+                  <stop offset="30%" stop-color="#eeeeee"/>
+                  <stop offset="50%" stop-color="#f5f5f5"/>
+                  <stop offset="70%" stop-color="#eeeeee"/>
+                  <stop offset="100%" stop-color="#d8d8d8"/>
                 </linearGradient>
-                <linearGradient id="wh2" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#e0e0e0"/>
-                  <stop offset="50%" stop-color="#f8f8f8"/>
+                <linearGradient id="wSleeveL" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#c8c8c8"/>
                   <stop offset="100%" stop-color="#e0e0e0"/>
                 </linearGradient>
+                <linearGradient id="wSleeveR" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#e0e0e0"/>
+                  <stop offset="100%" stop-color="#c8c8c8"/>
+                </linearGradient>
+                <linearGradient id="wShadow" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#888" stop-opacity="0.2"/>
+                  <stop offset="100%" stop-color="#888" stop-opacity="0"/>
+                </linearGradient>
               </defs>
-              <path d="M 110 100 L 60 130 L 40 220 L 80 225 L 80 400 L 320 400 L 320 225 L 360 220 L 340 130 L 290 100 Z" fill="url(#wh2)" stroke="#d0d0d0" stroke-width="1"/>
-              <path d="M 110 100 L 60 130 L 40 220 L 80 225 L 80 170 L 120 130 Z" fill="#e8e8e8" stroke="#ccc" stroke-width="0.5"/>
-              <path d="M 290 100 L 340 130 L 360 220 L 320 225 L 320 170 L 280 130 Z" fill="#e8e8e8" stroke="#ccc" stroke-width="0.5"/>
-              <path d="M 150 100 Q 200 80 250 100 L 255 115 Q 200 95 145 115 Z" fill="#ddd" stroke="#ccc" stroke-width="0.5"/>
-              <rect x="80" y="388" width="240" height="12" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5"/>
-              <rect x="40" y="210" width="40" height="12" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5" transform="rotate(-10 60 216)"/>
-              <rect x="320" y="210" width="40" height="12" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5" transform="rotate(10 340 216)"/>
-              <line x1="200" y1="115" x2="200" y2="395" stroke="#ddd" stroke-width="1" opacity="0.5"/>
+
+              <!-- Left sleeve -->
+              <path d="M 185 105 C 160 108, 120 118, 90 130 C 60 142, 30 158, 10 175 C 0 183, 0 195, 5 205 C 12 218, 28 222, 45 218 C 55 215, 62 210, 68 204 C 88 188, 108 172, 128 162 C 148 152, 162 148, 175 146 L 178 108 Z" fill="url(#wSleeveL)" stroke="#ccc" stroke-width="0.8"/>
+              <path d="M 5 205 C 12 218, 28 222, 45 218 C 35 228, 18 228, 8 218 Z" fill="#ccc" stroke="#bbb" stroke-width="0.5"/>
+
+              <!-- Right sleeve -->
+              <path d="M 415 105 C 440 108, 480 118, 510 130 C 540 142, 570 158, 590 175 C 600 183, 600 195, 595 205 C 588 218, 572 222, 555 218 C 545 215, 538 210, 532 204 C 512 188, 492 172, 472 162 C 452 152, 438 148, 425 146 L 422 108 Z" fill="url(#wSleeveR)" stroke="#ccc" stroke-width="0.8"/>
+              <path d="M 595 205 C 588 218, 572 222, 555 218 C 565 228, 582 228, 592 218 Z" fill="#ccc" stroke="#bbb" stroke-width="0.5"/>
+
+              <!-- Main body -->
+              <path d="M 178 108 L 175 146 C 162 148, 148 152, 135 160 L 130 530 L 470 530 L 465 160 C 452 152, 438 148, 425 146 L 422 108 C 400 100, 360 94, 300 92 C 240 94, 200 100, 178 108 Z" fill="url(#wBody)" stroke="#d0d0d0" stroke-width="0.8"/>
+
+              <!-- Collar ribbing -->
+              <path d="M 210 105 C 225 88, 255 80, 300 78 C 345 80, 375 88, 390 105 L 385 118 C 368 103, 340 96, 300 94 C 260 96, 232 103, 215 118 Z" fill="#ddd" stroke="#ccc" stroke-width="0.8"/>
+              <path d="M 215 118 C 232 103, 260 96, 300 94 C 340 96, 368 103, 385 118 C 368 110, 340 104, 300 102 C 260 104, 232 110, 215 118 Z" fill="#ccc" opacity="0.4"/>
+
+              <!-- Hem ribbing -->
+              <rect x="130" y="515" width="340" height="16" rx="1" fill="#ddd" stroke="#ccc" stroke-width="0.5"/>
+              <line x1="130" y1="519" x2="470" y2="519" stroke="#ccc" stroke-width="0.5" opacity="0.6"/>
+              <line x1="130" y1="523" x2="470" y2="523" stroke="#ccc" stroke-width="0.5" opacity="0.4"/>
+
+              <!-- Center seam -->
+              <line x1="300" y1="118" x2="300" y2="515" stroke="#ddd" stroke-width="1.5" opacity="0.5"/>
+
+              <!-- Armhole seam -->
+              <path d="M 175 146 C 162 148, 148 152, 135 162" stroke="#ccc" stroke-width="2" fill="none" opacity="0.7"/>
+              <path d="M 425 146 C 438 148, 452 152, 465 162" stroke="#ccc" stroke-width="2" fill="none" opacity="0.7"/>
+
+              <!-- Shoulder shadow -->
+              <path d="M 178 108 C 200 100, 240 94, 300 92 C 360 94, 400 100, 422 108 L 422 130 C 400 122, 360 116, 300 114 C 240 116, 200 122, 178 130 Z" fill="url(#wShadow)" opacity="0.6"/>
             </svg>
-            <div class="logo-overlay logo-on-white">
-              <img src="assets/killtrip-logo.png" alt="Killtrip" />
+            <div class="logo-overlay">
+              <img src="assets/killtrip-logo-transparent.png" alt="Killtrip" />
             </div>
           </div>
           <span class="mockup-tag" style="color:#888;">White — Drop 001</span>
